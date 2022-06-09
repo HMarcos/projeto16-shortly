@@ -5,7 +5,8 @@ import { error } from "../logging/logging.js";
 export async function validateSignUp(req, res, next) {
     const user = req.body;
     try {
-        const userAlreadyExists = await checkIfUserExistsByEmail(user.email);
+        const userInfo = await checkIfUserExistsByEmail(user.email)
+        const userAlreadyExists = userInfo.exists;
 
         if (userAlreadyExists) {
             console.log(error('This e-mail is already registered...\n'));
