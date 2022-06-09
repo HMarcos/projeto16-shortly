@@ -5,6 +5,8 @@ import dotenv from "dotenv";
 import db from "./db.js";
 import {info} from "./logging/logging.js";
 
+import authRouter from "./routers/authRouter.js";
+
 dotenv.config();
 
 const app = express();
@@ -12,6 +14,8 @@ const app = express();
 app.use(cors());
 app.use(json());
 
+// Routers
+app.use(authRouter);
 
 const PORT = process.env.PORT || 5000;
 
