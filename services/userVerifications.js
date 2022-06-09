@@ -7,7 +7,7 @@ export async function checkIfUserExistsByEmail(email) {
         let userInfo = { user }
 
         if (user.length > 0) {
-            userInfo = { ...userInfo, exists: true };
+            userInfo = { user: userInfo.user[0], exists: true };
         }
         else {
             userInfo = { ...userInfo, exists: false };

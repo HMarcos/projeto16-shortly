@@ -33,4 +33,22 @@ export async function insertUser(user){
     } catch (e) {
         throw e;
     }
-}
+};
+
+export async function insertSession(session){
+    const {userId, token} = session;
+
+    try {
+        const query = `
+            INSERT INTO sessions ("userId", token)
+            VALUES ($1, $2);
+        `;
+        
+        const values = [userId, token];
+
+        await db.query(query, values);
+
+    } catch (e) {
+        throw e;
+    }
+};
