@@ -29,7 +29,21 @@ export async function setShortUrl(req, res) {
 };
 
 export async function getUrl(req, res) {
-    const {link} = res.locals;
+    const { link } = res.locals;
 
     return res.send(link);
+};
+
+export async function openUrl(req, res) {
+    const { link } = res.locals;
+
+    try {
+        await linkRepository.incrementVisits(link.id);
+        console.log(debug('Redirecting link...\n'))
+        return res.redirect(link.url);
+    } catch (e) {
+        console.log(error("Database server internal error...\n"), e);
+        return res.sendStatus(500);
+    }
+
 };

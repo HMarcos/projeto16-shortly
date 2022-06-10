@@ -13,6 +13,31 @@ async function selectLinkById(id) {
     return result.rows;
 };
 
+async function selectLinkByShortUrl(shortUrl) {
+    const query = `
+        SELECT *
+        FROM links
+        WHERE "shortUrl" = $1;
+    `;
+
+    const values = [shortUrl];
+
+    const result = await db.query(query, values);
+    return result.rows;
+}
+
+async function incrementVisits(linkId) {
+    const query = `
+        UPDATE links
+        SET visits = visits + 1
+        WHERE id = $1;
+    `;
+
+    const values = [linkId];
+
+    await db.query(query, values);
+};
+
 async function insertLink(link) {
     const { userId, url, shortUrl } = link;
 
@@ -27,5 +52,7 @@ async function insertLink(link) {
 
 export const linkRepository = {
     selectLinkById,
+    selectLinkByShortUrl,
+    incrementVisits,
     insertLink
 };
