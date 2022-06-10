@@ -13,6 +13,21 @@ async function selectUserByEmail(email) {
     return result.rows;
 };
 
+async function selectUserByToken(token) {
+
+    const query = `
+            SELECT users.* 
+            FROM users INNER JOIN sessions
+            ON users.id = sessions."userId" 
+            WHERE sessions.token::text = $1;
+        `;
+
+    const values = [token];
+    const result = await db.query(query, values);
+    return result.rows;
+};
+
+
 async function insertUser(user) {
     const { name, email, password } = user;
 
@@ -41,6 +56,7 @@ async function insertSession(session) {
 
 export const userRepository = {
     selectUserByEmail,
+    selectUserByToken,
     insertUser,
     insertSession
 }

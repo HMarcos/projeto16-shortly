@@ -47,4 +47,4 @@ export async function validateSignIn(req, res, next) {
         console.log(error("Database server internal error...\n"), e);
         return res.sendStatus(500);
     }
-}
+};

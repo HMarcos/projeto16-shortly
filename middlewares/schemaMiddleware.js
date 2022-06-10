@@ -8,7 +8,7 @@ const validateSchema = (schema) => {
 
         if (schemaValidation.error) {
             const validationErrors = schemaValidation.error.details.map(detail => detail.message);
-            console.log(error('Validation errors: \n'), validationErrors);
+            console.log(error('Validation errors:\n'), error(validationErrors.join('\n')), "\n");
             return res.status(422).send(validationErrors);
         }
 

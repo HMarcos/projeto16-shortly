@@ -6,6 +6,7 @@ import db from "./db.js";
 import { info } from "./logging/logging.js";
 
 import authRouter from "./routers/authRouter.js";
+import linkRouter from "./routers/linkRouter.js";
 
 dotenv.config();
 
@@ -14,11 +15,11 @@ const app = express();
 app.use(cors());
 app.use(json());
 
-// Routers
 app.use(authRouter);
+app.use(linkRouter);
 
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
-    console.log(info(`The application is running on the PORT ${PORT}...`));
+    console.log(info(`The application is running on the PORT ${PORT}...\n`));
 });
