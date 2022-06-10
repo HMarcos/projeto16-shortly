@@ -1,11 +1,11 @@
 import pg from "pg";
 import dotenv from "dotenv";
 
-import {info, error} from "./logging/logging.js";
+import { info, error } from "./logging/logging.js";
 
 dotenv.config();
 
-const {Pool} = pg;
+const { Pool } = pg;
 
 let db = null;
 
@@ -14,7 +14,7 @@ try {
         connectionString: process.env.DATABASE_URL
     };
 
-    if (process.env.MODE === "PROD"){
+    if (process.env.MODE === "PROD") {
         databaseConfig.ssl = {
             rejectUnauthorized: false
         }
@@ -23,7 +23,7 @@ try {
     db = new Pool(databaseConfig);
 
     console.log(info("Connection to postgres database successfully established..."));
-    
+
 } catch (e) {
     console.log(error("Error to connecting to postgres database...\n"), e);
     process.exit();

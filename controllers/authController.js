@@ -1,7 +1,7 @@
 import bcrypt from "bcrypt";
 import { v4 as uuid } from "uuid";
 
-import { insertSession, insertUser } from "../services/userQueries.js";
+import { userRepository } from "./../repositories/userRepository.js";
 import { debug, error } from "../logging/logging.js";
 
 const SALT_ROUNDS = 10;
@@ -16,7 +16,7 @@ export async function setRegister(req, res) {
     }
 
     try {
-        await insertUser(user);
+        await userRepository.insertUser(user);
         console.log(debug('User registered successfully...\n'))
         return res.sendStatus(201);
 
@@ -33,9 +33,9 @@ export async function setLogin(req, res) {
     const session = { userId, token };
 
     try {
-        await insertSession(session);
+        await userRepository.insertSession(session);
         console.log(debug('Session registered successfully...\n'))
-        return res.status(200).send({token});
+        return res.status(200).send({ token });
 
     } catch (e) {
         console.log(error("Database server internal error...\n"), e);

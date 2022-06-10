@@ -6,7 +6,7 @@ const signUpSchema = joi.object(
         email: joi.string().email().required(),
         password: joi.string().min(8).required(),
         confirmPassword: joi.string().valid(joi.ref('password')).required().messages(
-            {'any.only': '{{#label}} does not match'}
+            { 'any.only': '{{#label}} does not match' }
         )
     }
 );

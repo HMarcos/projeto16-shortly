@@ -6,7 +6,7 @@ import { error } from "../logging/logging.js";
 export async function validateSignUp(req, res, next) {
     const user = req.body;
     try {
-        const userInfo = await checkIfUserExistsByEmail(user.email)
+        const userInfo = await checkIfUserExistsByEmail(user.email);
         const userAlreadyExists = userInfo.exists;
 
         if (userAlreadyExists) {
@@ -17,7 +17,7 @@ export async function validateSignUp(req, res, next) {
         console.log(error("Database server internal error...\n"), e);
         return res.sendStatus(500);
     }
-    
+
     next();
 };
 
@@ -39,7 +39,7 @@ export async function validateSignIn(req, res, next) {
             console.log(error('The password is incorrect..\n'));
             return res.status(401).send('The password is incorrect...\n');
         }
-        
+
         res.locals.user = user;
         next();
 

@@ -1,9 +1,9 @@
-import express, {json} from "express";
+import express, { json } from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 
 import db from "./db.js";
-import {info} from "./logging/logging.js";
+import { info } from "./logging/logging.js";
 
 import authRouter from "./routers/authRouter.js";
 
