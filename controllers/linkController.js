@@ -27,3 +27,9 @@ export async function setShortUrl(req, res) {
         return res.sendStatus(500);
     }
 };
+
+export async function getUrl(req, res) {
+    const {link} = res.locals;
+
+    return res.send(link);
+};
