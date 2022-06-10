@@ -23,6 +23,7 @@ export async function getUser(req, res) {
 export async function getRanking(req, res) {
     try {
         const ranking = await userRepository.selectRanking();
+        console.log(debug('Ranking retrieved...\n'));
         res.send(ranking);
     } catch (e) {
         console.log(error("Server Internal error... \n"), e);
