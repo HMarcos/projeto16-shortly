@@ -2,7 +2,7 @@ import db from "../db.js";
 
 async function selectLinkById(id) {
     const query = `
-        SELECT id, "shortUrl", url
+        SELECT *
         FROM links
         WHERE id = $1;
     `;
@@ -50,9 +50,22 @@ async function insertLink(link) {
     await db.query(query, values);
 }
 
+async function deleteLink(linkId) {
+    const query = `
+        DELETE 
+        FROM links
+        WHERE id = $1;
+    `;
+
+    const values = [linkId];
+
+    await db.query(query, values);
+}
+
 export const linkRepository = {
     selectLinkById,
     selectLinkByShortUrl,
     incrementVisits,
+    deleteLink,
     insertLink
 };

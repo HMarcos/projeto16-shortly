@@ -30,7 +30,12 @@ export async function setShortUrl(req, res) {
 
 export async function getUrl(req, res) {
     const { link } = res.locals;
+    
+    delete link.userId;
+    delete link.createdAt;
+    delete link.visits;
 
+    console.log(debug(`Link retrieved...\n`));
     return res.send(link);
 };
 
@@ -39,7 +44,7 @@ export async function openUrl(req, res) {
 
     try {
         await linkRepository.incrementVisits(link.id);
-        console.log(debug('Redirecting link...\n'))
+        console.log(debug('Redirecting link...\n'));
         return res.redirect(link.url);
     } catch (e) {
         console.log(error("Database server internal error...\n"), e);
@@ -47,3 +52,16 @@ export async function openUrl(req, res) {
     }
 
 };
+
+export async function deleteUrl(req, res) {
+    const linkId = parseInt(req.params.id);
+
+    try {
+        await linkRepository.deleteLink(linkId);
+        console.log(debug('Link deleted...\n'));
+        return res.sendStatus(204);
+    } catch (e) {
+        console.log(error("Database server internal error...\n"), e);
+        return res.sendStatus(500);
+    }
+}

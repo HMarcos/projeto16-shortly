@@ -37,3 +37,14 @@ export async function validateUrlByShortUrl(req, res, next) {
         return res.sendStatus(500);
     }
 };
+
+export function validateURLOwner(req, res, next){
+    const {user, link} = res.locals;
+
+    if (user.id !== link.userId){
+        console.log(error('Invalid owner...\n'));
+        return res.sendStatus(401);
+    }
+    
+    next();
+}
