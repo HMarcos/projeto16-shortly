@@ -13,6 +13,19 @@ async function selectUserByEmail(email) {
     return result.rows;
 };
 
+async function selectUserById(id) {
+
+    const query = `
+            SELECT * 
+            FROM users 
+            WHERE id = $1;
+        `;
+
+    const values = [id];
+    const result = await db.query(query, values);
+    return result.rows;
+};
+
 async function selectUserByToken(token) {
 
     const query = `
@@ -57,6 +70,7 @@ async function insertSession(session) {
 export const userRepository = {
     selectUserByEmail,
     selectUserByToken,
+    selectUserById,
     insertUser,
     insertSession
 }

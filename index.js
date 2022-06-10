@@ -7,6 +7,7 @@ import { info } from "./logging/logging.js";
 
 import authRouter from "./routers/authRouter.js";
 import linkRouter from "./routers/linkRouter.js";
+import userRouter from "./routers/userRouter.js";
 
 dotenv.config();
 
@@ -17,6 +18,7 @@ app.use(json());
 
 app.use(authRouter);
 app.use(linkRouter);
+app.use(userRouter);
 
 const PORT = process.env.PORT || 5000;
 
