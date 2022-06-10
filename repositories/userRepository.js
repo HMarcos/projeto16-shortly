@@ -40,6 +40,22 @@ async function selectUserByToken(token) {
     return result.rows;
 };
 
+async function selectRanking() {
+    const query = `
+        SELECT 
+            users.id, users.name, COUNT(links.id) AS "linksCount", 
+            COALESCE(SUM(links.visits),0) AS "visitCount"
+        FROM users LEFT JOIN links
+            ON users.id = links."userId"
+        GROUP BY users.id, users.name
+        ORDER BY "visitCount" DESC
+        LIMIT 10;
+    `;
+
+    const result = await db.query(query);
+    return result.rows;
+};
+
 
 async function insertUser(user) {
     const { name, email, password } = user;
@@ -71,6 +87,7 @@ export const userRepository = {
     selectUserByEmail,
     selectUserByToken,
     selectUserById,
+    selectRanking,
     insertUser,
     insertSession
 }

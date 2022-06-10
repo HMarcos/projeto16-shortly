@@ -1,5 +1,6 @@
 import { linkRepository } from "../repositories/linkRepository.js";
 import { debug, error } from "../logging/logging.js";
+import { userRepository } from "../repositories/userRepository.js";
 
 
 export async function getUser(req, res) {
@@ -19,8 +20,18 @@ export async function getUser(req, res) {
     }
 };
 
-function formatUser(user, visitCount, userLinks){
-    const formatedUser ={
+export async function getRanking(req, res) {
+    try {
+        const ranking = await userRepository.selectRanking();
+        res.send(ranking);
+    } catch (e) {
+        console.log(error("Server Internal error... \n"), e);
+        return res.sendStatus(500);
+    }
+};
+
+function formatUser(user, visitCount, userLinks) {
+    const formatedUser = {
         id: user.id,
         name: user.name,
         visitCount,
